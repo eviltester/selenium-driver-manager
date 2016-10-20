@@ -59,8 +59,6 @@
         <htmlunitdriver.version>2.23</htmlunitdriver.version>
         <webdriver.version>3.0.1</webdriver.version>
     </properties>
-
-
     <dependencies>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
@@ -70,7 +68,7 @@
 
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-server</artifactId>
+            <artifactId>selenium-java</artifactId>
             <version>${webdriver.version}</version>
         </dependency>
     </dependencies>
@@ -116,6 +114,49 @@
                     </execution>
                 </executions>
             </plugin>
+
+
+            <!-- GPG sign artifacts as per http://central.sonatype.org/pages/apache-maven.html
+             credentials stored in .m2\settings.xml
+              http://maven.apache.org/plugins/maven-gpg-plugin/
+              http://maven.apache.org/plugins/maven-gpg-plugin/usage.html
+             -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+            <!-- nexus staging plugin as per http://central.sonatype.org/pages/apache-maven.html
+                 to release:
+                     mvn clean deploy
+                 something went wrong you can drop the staging repository:
+                     mvn nexus-staging:drop
+
+                 see also http://books.sonatype.com/nexus-book/reference/staging.html
+            -->
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.7</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
 
