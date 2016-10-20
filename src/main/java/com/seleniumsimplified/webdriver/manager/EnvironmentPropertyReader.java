@@ -8,6 +8,10 @@ public class EnvironmentPropertyReader {
     /**
      * Allow setting the controls via property or environment variable
      * property takes precedence, then environment variable, then default
+     *
+     * @param name The name of the environment variable or system property
+     * @param theDefault default value to return if environment variable or property not set
+     * @return returns the property value if set, or the environment value if set, or the default if neither set
      */
     public static String getPropertyOrEnv(String name, String theDefault){
 

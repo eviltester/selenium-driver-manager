@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>co.uk.compendiumdev</groupId>
+    <groupId>uk.co.compendiumdev</groupId>
     <artifactId>selenium-driver-manager</artifactId>
-    <version>3.0.1-SNAPSHOT</version>
+    <version>3.0.1</version>
     <packaging>jar</packaging>
 
     <name>Selenium Simplified Driver Manager</name>
@@ -154,6 +154,35 @@
                     <serverId>ossrh</serverId>
                     <nexusUrl>https://oss.sonatype.org/</nexusUrl>
                     <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+
+
+            <!-- nexus maven release plugin as per http://central.sonatype.org/pages/apache-maven.html
+                 "Performing a Release Deployment with the Maven Release Plugin"
+
+                 rename from -SNAPSHOT
+
+                 mvn clean deploy
+
+                 check staging repositories
+                 https://oss.sonatype.org/#stagingRepositories
+
+                  perform a release deployment to OSSRH with
+                        mvn release:clean release:prepare
+
+                  by answering the prompts for versions and tags, followed by
+                        mvn release:perform
+            -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
+                <configuration>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <useReleaseProfile>false</useReleaseProfile>
+                    <releaseProfiles>release</releaseProfiles>
+                    <goals>deploy</goals>
                 </configuration>
             </plugin>
 
